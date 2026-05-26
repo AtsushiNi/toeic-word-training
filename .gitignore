@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+.env
+
+# EasyOCR / ML models
+.EasyOCR/
+
+# Node / React Native
+node_modules/
+.expo/
+dist/
+build/
+
+# iOS / Android build artifacts
+ios/
+android/
+
+# macOS
+.DS_Store
+
+# 写真データ（個人情報・著作物）
+scripts/photos/
+data/raw/
