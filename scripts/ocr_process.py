@@ -279,14 +279,42 @@ def merge(left_entries, right_entries):
 def find_spreads(directory):
     """
     Find left/right page pairs in directory.
-    Expects: left1.jpg + right1.jpg, left2.jpg + right2.jpg, …
+
+    Mode 1 – directory-based (新形式):
+      <directory>/左ページ/*.jpg  +  <directory>/右ページ/*.jpg
+      Files are sorted by filename ascending; i-th left pairs with i-th right.
+
+    Mode 2 – flat naming (既存形式):
+      left1.jpg + right1.jpg, left2.jpg + right2.jpg, …
+
     Returns sorted list of (left_path, right_path) tuples.
     """
     d = Path(directory)
+    left_dir  = d / '左ページ'
+    right_dir = d / '右ページ'
+
+    if left_dir.is_dir() and right_dir.is_dir():
+        exts = {'jpg', 'jpeg', 'png'}
+        left_files  = sorted(
+            f for f in left_dir.iterdir()
+            if f.suffix.lower().lstrip('.') in exts
+        )
+        right_files = sorted(
+            f for f in right_dir.iterdir()
+            if f.suffix.lower().lstrip('.') in exts
+        )
+        if len(left_files) != len(right_files):
+            print(
+                f"エラー: 左ページ ({len(left_files)}枚) と"
+                f" 右ページ ({len(right_files)}枚) の枚数が一致しません"
+            )
+            sys.exit(1)
+        return list(zip(left_files, right_files))
+
     pairs = []
     for ext in ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG']:
         for left in sorted(d.glob(f'left*.{ext}')):
-            num    = re.search(r'\d+', left.stem)
+            num = re.search(r'\d+', left.stem)
             if not num:
                 continue
             right = left.with_name(f'right{num.group()}.{ext}')
@@ -323,7 +351,11 @@ def main():
 
     spreads = find_spreads(args.dir)
     if not spreads:
-        print(f"エラー: {args.dir}/ に left1.jpg + right1.jpg のペアが見つかりません")
+        print(
+            f"エラー: {args.dir}/ に画像ペアが見つかりません\n"
+            f"  新形式: {args.dir}/左ページ/ + {args.dir}/右ページ/ ディレクトリ\n"
+            f"  旧形式: {args.dir}/left1.jpg + {args.dir}/right1.jpg"
+        )
         sys.exit(1)
 
     all_entries = []
