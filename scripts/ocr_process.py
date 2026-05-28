@@ -161,7 +161,16 @@ def detect_row_bands(img, n_rows=None):
 
     # ボーダーからバンドを生成（先頭は画像上端、末尾は画像下端まで）
     all_y = [0] + borders + [img_h]
-    return [(all_y[k], all_y[k + 1]) for k in range(n_rows)]
+    bands = [(all_y[k], all_y[k + 1]) for k in range(n_rows)]
+
+    # ボーダー間隔の変動係数（CV）で信頼性を判定する
+    # CV = 標準偏差 / 平均。画像によって枠線の見え方が異なる場合に高くなる
+    gaps = [borders[i + 1] - borders[i] for i in range(len(borders) - 1)]
+    mean_gap = sum(gaps) / len(gaps)
+    cv = (sum((g - mean_gap) ** 2 for g in gaps) / len(gaps)) ** 0.5 / mean_gap
+    reliable = cv < 0.15  # 変動15%未満を信頼できる検出とみなす
+
+    return bands, reliable
 
 
 # ── helpers ──────────────────────────────────────────────────────────────────
@@ -487,8 +496,13 @@ def process_spread(left_path, right_path):
     right_img_orig = Image.open(right_path)
 
     print("  前処理中 (枠線検出・明るさ正規化)...")
-    left_bands  = detect_row_bands(left_img_orig)
-    right_bands = detect_row_bands(right_img_orig)
+    left_bands,  left_reliable  = detect_row_bands(left_img_orig)
+    right_bands, right_reliable = detect_row_bands(right_img_orig)
+
+    # 信頼性が低い場合（ボーダー間隔のばらつきが大きい）はギャップ分析にフォールバック
+    if not right_reliable:
+        print("  右ページ: 枠線ばらつき大 → ギャップ分析を使用")
+        right_bands = None
 
     left_img_norm  = normalize_brightness(left_img_orig)
     right_img_norm = normalize_brightness(right_img_orig)
