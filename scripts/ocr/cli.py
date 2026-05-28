@@ -7,7 +7,7 @@ from pathlib import Path
 from PIL import Image
 
 from .vision import ocr_file
-from .preprocess import normalize_brightness, detect_row_bands
+from .preprocess import normalize_brightness, detect_row_bands, detect_page_region, deskew
 from .parse import parse_left, parse_right, merge
 
 
@@ -56,32 +56,46 @@ def find_spreads(directory):
     return pairs
 
 
-def process_spread(left_path, right_path):
+def process_spread(left_path, right_path, use_preprocess=True):
     """1ページスプレッド（左右ペア）を前処理・OCR・パースしてエントリーリストを返す。"""
     print(f"処理中: {left_path.name} + {right_path.name}")
 
-    # 元画像を読み込み、枠線検出と明るさ正規化を実施してからOCRに渡す
-    left_img_orig  = Image.open(left_path)
-    right_img_orig = Image.open(right_path)
+    left_img  = Image.open(left_path)
+    right_img = Image.open(right_path)
 
-    print("  前処理中 (枠線検出・明るさ正規化)...")
-    left_bands,  left_reliable  = detect_row_bands(left_img_orig)
-    right_bands, right_reliable = detect_row_bands(right_img_orig)
+    if use_preprocess:
+        print("  前処理中 (ページ検出・傾き補正・明るさ正規化)...")
+
+        # ページ領域を検出して透視変換で正規化する
+        left_img,  left_page_found  = detect_page_region(left_img)
+        right_img, right_page_found = detect_page_region(right_img)
+
+        # ページ検出できなかった場合はデスキューにフォールバック
+        if not left_page_found:
+            left_img  = deskew(left_img)
+        if not right_page_found:
+            right_img = deskew(right_img)
+
+        left_img  = normalize_brightness(left_img)
+        right_img = normalize_brightness(right_img)
+    else:
+        print("  前処理スキップ...")
+
+    # 前処理後の画像で行バンドを検出する
+    left_bands,  left_reliable  = detect_row_bands(left_img)
+    right_bands, right_reliable = detect_row_bands(right_img)
 
     # 信頼性が低い場合（ボーダー間隔のばらつきが大きい）はギャップ分析にフォールバック
     if not right_reliable:
         print("  右ページ: 枠線ばらつき大 → ギャップ分析を使用")
         right_bands = None
 
-    left_img_norm  = normalize_brightness(left_img_orig)
-    right_img_norm = normalize_brightness(right_img_orig)
-
     print("  左ページ OCR...")
-    lines_left = ocr_file(left_img_norm)
+    lines_left = ocr_file(left_img)
     print(f"    {len(lines_left)} テキストブロック検出")
 
     print("  右ページ OCR...")
-    lines_right = ocr_file(right_img_norm)
+    lines_right = ocr_file(right_img)
     print(f"    {len(lines_right)} テキストブロック検出")
 
     left_entries  = parse_left(lines_left,  row_bands=left_bands)
@@ -98,6 +112,8 @@ def main():
     parser.add_argument('--dir', default='data', help='leftN/rightN 画像のディレクトリ')
     parser.add_argument('--raw', action='store_true', help='生OCRデータも保存')
     parser.add_argument('--out', default='data/words.json')
+    parser.add_argument('--no-preprocess', action='store_true',
+                        help='ページ検出・傾き補正・明るさ正規化をスキップして生画像のままOCRを実行する')
     args = parser.parse_args()
 
     spreads = find_spreads(args.dir)
@@ -113,7 +129,8 @@ def main():
     all_raw     = []
 
     for left_path, right_path in spreads:
-        entries, raw = process_spread(left_path, right_path)
+        entries, raw = process_spread(left_path, right_path,
+                                      use_preprocess=not args.no_preprocess)
         all_entries.extend(entries)
         if args.raw:
             all_raw.append(dict(left_path=str(left_path), right_path=str(right_path), **raw))
