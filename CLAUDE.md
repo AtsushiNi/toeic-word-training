@@ -2,6 +2,9 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## タスクを進める時の注意
+最初に最新のリモートブランチを確認すること
+
 ## コーディング規約
 
 コメントは日本語で丁寧に記述すること。
