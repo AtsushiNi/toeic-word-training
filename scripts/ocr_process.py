@@ -128,13 +128,14 @@ def normalize_brightness(img):
     else:
         corrected = np.clip(arr * scale, 0, 255).astype(np.uint8)
 
-    return Image.fromarray(corrected, mode=img.mode)
+    return Image.fromarray(corrected)
 
 
 def detect_row_bands(img, n_rows=None):
     """
-    水平方向の黒い枠線を検出し、n_rows 行分のバンド [(y_start, y_end), ...] を返す。
-    枠線が十分に検出できない場合は均等分割にフォールバックする。
+    各行の推定中心位置の近傍で最暗行を探してボーダーとし、
+    n_rows 行分のバンド [(y_start, y_end), ...] を返す。
+    行が等間隔に並ぶという前提を利用するため、薄い枠線でも安定して検出できる。
     """
     if n_rows is None:
         n_rows = ENTRIES_PER_PAGE
@@ -146,47 +147,21 @@ def detect_row_bands(img, n_rows=None):
     margin         = img_w // 10
     row_brightness = gray[:, margin:img_w - margin].mean(axis=1)
 
-    # ページ上下5%を除いた内側で閾値を算出
-    inner_start = int(img_h * 0.05)
-    inner_end   = int(img_h * 0.95)
-    inner       = row_brightness[inner_start:inner_end]
+    # 均等間隔のボーダー推定位置の近傍（±行高さの30%）で最暗行を探す
+    row_height    = img_h / n_rows
+    search_radius = int(row_height * 0.3)
 
-    # 下位10パーセンタイルかつ絶対値80以下の行を枠線候補とする
-    threshold = min(float(np.percentile(inner, 10)), 80.0)
+    borders = []
+    for k in range(1, n_rows):
+        expected_y = int(k * row_height)
+        y_lo = max(0,     expected_y - search_radius)
+        y_hi = min(img_h, expected_y + search_radius)
+        local_min_idx = int(np.argmin(row_brightness[y_lo:y_hi]))
+        borders.append(y_lo + local_min_idx)
 
-    # 閾値以下の連続した行をグループ化してボーダーy座標（グループ中心）を検出
-    borders    = []
-    in_group   = False
-    group_start = 0
-    for i in range(inner_start, inner_end):
-        dark = row_brightness[i] <= threshold
-        if dark and not in_group:
-            in_group    = True
-            group_start = i
-        elif not dark and in_group:
-            in_group = False
-            borders.append((group_start + i) // 2)
-    if in_group:
-        borders.append((group_start + inner_end) // 2)
-
-    # n_rows-1 本のボーダーから n_rows 個のバンドを生成する
-    if len(borders) >= n_rows - 1:
-        # ボーダーが多い場合は等間隔サンプリングで n_rows-1 本に絞る
-        if len(borders) > n_rows - 1:
-            denom = max(n_rows - 2, 1)
-            idxs  = {round(k * (len(borders) - 1) / denom) for k in range(n_rows - 1)}
-            borders = sorted(borders[j] for j in sorted(idxs) if j < len(borders))[:n_rows - 1]
-
-        gap    = (borders[-1] - borders[0]) / max(len(borders) - 1, 1)
-        top    = max(0,     int(borders[0]  - gap * 0.5))
-        bottom = min(img_h, int(borders[-1] + gap * 0.5))
-        all_y  = [top] + borders + [bottom]
-        return [(all_y[k], all_y[k + 1]) for k in range(n_rows)]
-
-    # 枠線の検出数が不足する場合は均等分割にフォールバック
-    print("  警告: 枠線が十分に検出できませんでした。均等分割にフォールバックします")
-    step = img_h / n_rows
-    return [(int(k * step), int((k + 1) * step)) for k in range(n_rows)]
+    # ボーダーからバンドを生成（先頭は画像上端、末尾は画像下端まで）
+    all_y = [0] + borders + [img_h]
+    return [(all_y[k], all_y[k + 1]) for k in range(n_rows)]
 
 
 # ── helpers ──────────────────────────────────────────────────────────────────
@@ -316,7 +291,16 @@ def parse_right(lines, row_bands=None):
             band = [l for l in lines if y_start <= l['y'] <= y_end]
             band.sort(key=lambda l: l['y'])
 
-            hw      = next((l for l in band if is_headword(l)), None)
+            # Visionの言語補正で大文字化されることがあるため、小文字化してから判定する
+            def _find_headword(lines):
+                for l in lines:
+                    if is_headword(l):
+                        return l
+                    lc = dict(l, text=l['text'].lower())
+                    if is_headword(lc):
+                        return lc
+                return None
+            hw      = _find_headword(band)
             english = hw['text'].strip() if hw else ''
 
             # 品詞マーカー付きの日本語意味を優先して探す
