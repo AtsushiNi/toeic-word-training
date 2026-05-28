@@ -27,7 +27,7 @@ python scripts/ocr_process.py --dir ./data/ --out ./data/my_words.json
 
 macOS-only. Install with:
 ```bash
-pip install pyobjc-framework-Vision Pillow
+pip install pyobjc-framework-Vision Pillow numpy
 ```
 
 ## Input image layout
