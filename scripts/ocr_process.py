@@ -92,8 +92,6 @@ def is_english(text):
     return bool(alpha) and sum(1 for c in alpha if c.isascii()) / len(alpha) > 0.7
 
 ENTRY_RE = re.compile(r'^0*(\d{1,3})$')
-LEVEL_RE = re.compile(r'(?:Score\s*)?(\d{3,4})\s*[Ll]evel', re.IGNORECASE)
-POS_RE   = re.compile(r'^[名動形副前接間代助]\s')
 
 
 # ── left page ────────────────────────────────────────────────────────────────
@@ -185,19 +183,11 @@ def is_headword(line):
 
 def parse_right(lines):
     """
-    Extract {english, japanese, partOfSpeech, level} per entry from the right page.
+    Extract {english, japanese} per entry from the right page.
     Headwords are short purely-alphabetic English lines (see is_headword()).
     """
     if not lines:
         return []
-
-    # Score level
-    current_level = None
-    for l in lines:
-        m = LEVEL_RE.search(l['text'])
-        if m:
-            current_level = int(m.group(1))
-            break
 
     headwords = [l for l in lines if is_headword(l)]
     headwords.sort(key=lambda l: l['y'])
@@ -213,12 +203,10 @@ def parse_right(lines):
         band.sort(key=lambda l: l['y'])
 
         japanese = ''
-        pos      = ''
         # Priority 1: POS line with actual meaning content after the POS char
         for l in band:
             t = l['text'].strip()
             if t and t[0] in '名動形副前接間代助' and len(t) > 2:
-                pos      = t[0]
                 japanese = t[1:].lstrip()
                 break
         # Priority 2: first non-English line with meaningful content (>3 chars)
@@ -229,8 +217,7 @@ def parse_right(lines):
                     japanese = t
                     break
 
-        entries.append(dict(english=hw['text'].strip(), japanese=japanese,
-                            partOfSpeech=pos, level=current_level))
+        entries.append(dict(english=hw['text'].strip(), japanese=japanese))
 
     return entries
 
@@ -263,13 +250,11 @@ def merge(left_entries, right_entries):
             left = dict(id=lid, exampleJa='', exampleEnRaw='')
 
         merged.append(dict(
-            id           = lid,
-            english      = right['english'],
-            japanese     = right['japanese'],
-            partOfSpeech = right['partOfSpeech'],
-            level        = right['level'],
-            exampleJa    = left.get('exampleJa', ''),
-            exampleEn    = fill_blank(left.get('exampleEnRaw', ''), right['english']),
+            id        = lid,
+            english   = right['english'],
+            japanese  = right['japanese'],
+            exampleJa = left.get('exampleJa', ''),
+            exampleEn = fill_blank(left.get('exampleEnRaw', ''), right['english']),
         ))
     return merged
 
@@ -385,7 +370,7 @@ def main():
 
     print("\n--- プレビュー (最初の10件) ---")
     for e in all_entries[:10]:
-        print(f"  [{e['id']:>3}] {e['english']:<20} {e['partOfSpeech']} {e['japanese']}")
+        print(f"  [{e['id']:>3}] {e['english']:<20} {e['japanese']}")
         if e['exampleJa']:
             print(f"        JA: {e['exampleJa']}")
         if e['exampleEn']:
