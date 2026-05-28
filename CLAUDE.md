@@ -24,13 +24,16 @@ python scripts/ocr_process.py --dir ./data/ --raw
 
 # Custom output path
 python scripts/ocr_process.py --dir ./data/ --out ./data/my_words.json
+
+# Skip preprocessing (page detection / deskew / brightness normalization)
+python scripts/ocr_process.py --dir ./data/ --no-preprocess
 ```
 
 ## Dependencies
 
 macOS-only. Install with:
 ```bash
-pip install pyobjc-framework-Vision Pillow numpy
+pip install pyobjc-framework-Vision Pillow numpy opencv-python
 ```
 
 ## Input image layout
@@ -67,5 +70,11 @@ All logic is in `scripts/ocr_process.py`:
 - `parse_right()` — extracts headwords (detected by `is_headword()`: lowercase, 1–3 words, height ≥ 28px), Japanese meanings, and TOEIC score level
 - `merge()` — zips left and right entries by index (not by entry number) and calls `fill_blank()` to substitute the headword into the example sentence blank
 - `find_spreads()` — detects which input mode is in use and returns sorted `(left_path, right_path)` pairs
+
+Preprocessing pipeline (`scripts/ocr/preprocess.py`, applied before OCR by default):
+- `detect_page_region()` — Canny edge detection + contour approximation to find the page quadrilateral; applies perspective transform to straighten and crop to the page area; returns `(image, detected: bool)`
+- `deskew()` — fallback when page detection fails; estimates tilt angle from text-row bounding boxes and rotates to correct
+- `normalize_brightness()` — estimates background illumination via large Gaussian blur and normalizes to a uniform brightness
+- `detect_row_bands()` — locates the 10 horizontal row dividers and returns band coordinates used by the parser
 
 `data/` is gitignored for raw photos (`data/raw/`) but `words.json` / `words.raw.json` are committed.

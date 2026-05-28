@@ -1,3 +1,4 @@
+import cv2
 import numpy as np
 from PIL import Image, ImageFilter
 
@@ -71,3 +72,107 @@ def detect_row_bands(img, n_rows=None):
     reliable = cv < 0.15  # 変動15%未満を信頼できる検出とみなす
 
     return bands, reliable
+
+
+def detect_page_region(img):
+    """
+    Canny エッジ検出と輪郭近似でページ領域（最大四角形）を検出し、
+    透視変換で正規化したクロップ画像を返す。
+    四角形が見つかった場合は (変換後画像, True)、失敗時は (元画像, False) を返す。
+    """
+    arr  = np.array(img)
+    gray = cv2.cvtColor(arr, cv2.COLOR_RGB2GRAY) if arr.ndim == 3 else arr.copy()
+    h, w = gray.shape
+
+    # ぼかしてノイズを除去してからエッジ検出
+    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+    edges   = cv2.Canny(blurred, 50, 150)
+
+    # エッジを膨張させて輪郭を繋げる
+    dilated   = cv2.dilate(edges, np.ones((3, 3), np.uint8), iterations=1)
+    contours, _ = cv2.findContours(dilated, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    if not contours:
+        return img, False
+
+    # 面積の大きい順に上位5件を候補として四角形を探す
+    page_pts = None
+    for cnt in sorted(contours, key=cv2.contourArea, reverse=True)[:5]:
+        # 画像面積の30%未満は対象外
+        if cv2.contourArea(cnt) < 0.3 * h * w:
+            break
+        peri   = cv2.arcLength(cnt, True)
+        approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
+        if len(approx) == 4:
+            page_pts = approx.reshape(4, 2).astype(np.float32)
+            break
+
+    if page_pts is None:
+        return img, False
+
+    # 4点を左上・右上・右下・左下の順に並べ替え
+    s    = page_pts.sum(axis=1)
+    diff = np.diff(page_pts, axis=1).ravel()
+    tl   = page_pts[np.argmin(s)]
+    br   = page_pts[np.argmax(s)]
+    tr   = page_pts[np.argmin(diff)]
+    bl   = page_pts[np.argmax(diff)]
+    src  = np.array([tl, tr, br, bl], dtype=np.float32)
+
+    # 出力サイズ: 上下辺・左右辺それぞれの長い方を採用
+    out_w = int(max(np.linalg.norm(tr - tl), np.linalg.norm(br - bl)))
+    out_h = int(max(np.linalg.norm(bl - tl), np.linalg.norm(br - tr)))
+    dst = np.array([[0, 0], [out_w - 1, 0], [out_w - 1, out_h - 1], [0, out_h - 1]],
+                   dtype=np.float32)
+
+    M      = cv2.getPerspectiveTransform(src, dst)
+    warped = cv2.warpPerspective(arr, M, (out_w, out_h))
+    return Image.fromarray(warped), True
+
+
+def deskew(img):
+    """
+    Otsu 二値化後に水平方向に膨張してテキスト行を塊として検出し、
+    minAreaRect で傾き角を推定して回転補正する。
+    ページ領域検出に失敗した場合のフォールバックとして使用する。
+    傾きが 0.5 度未満の場合は元画像をそのまま返す。
+    """
+    arr  = np.array(img)
+    gray = cv2.cvtColor(arr, cv2.COLOR_RGB2GRAY) if arr.ndim == 3 else arr.copy()
+
+    # Otsu 二値化でテキスト領域を白、背景を黒に反転
+    _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+
+    # 水平方向に膨張してテキスト行を1つの塊にまとめる
+    dil_w  = max(1, gray.shape[1] // 10)
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (dil_w, 1))
+    dilated = cv2.dilate(binary, kernel, iterations=2)
+
+    contours, _ = cv2.findContours(dilated, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    min_area    = gray.shape[0] * gray.shape[1] * 0.001
+
+    angles = []
+    for cnt in contours:
+        if cv2.contourArea(cnt) < min_area:
+            continue
+        rect  = cv2.minAreaRect(cnt)
+        angle = rect[2]
+        # minAreaRect は [-90, 0) を返す。水平に近い矩形の角度に統一
+        if angle < -45:
+            angle += 90
+        if abs(angle) < 45:
+            angles.append(angle)
+
+    if not angles:
+        return img
+
+    skew = float(np.median(angles))
+    if abs(skew) < 0.5:  # 0.5度未満は補正不要
+        return img
+
+    h, w   = gray.shape
+    center = (w // 2, h // 2)
+    M      = cv2.getRotationMatrix2D(center, skew, 1.0)
+    rotated = cv2.warpAffine(arr, M, (w, h),
+                              flags=cv2.INTER_LINEAR,
+                              borderMode=cv2.BORDER_REPLICATE)
+    return Image.fromarray(rotated)
