@@ -92,46 +92,59 @@ def is_english(text):
     return bool(alpha) and sum(1 for c in alpha if c.isascii()) / len(alpha) > 0.7
 
 ENTRY_RE = re.compile(r'^0*(\d{1,3})$')
+ENTRIES_PER_PAGE = 10  # 各ページ固定行数（金のフレーズ仕様）
 
 
 # ── left page ────────────────────────────────────────────────────────────────
 
 def parse_left(lines):
     """
-    Extract {id, exampleJa, exampleEnRaw} per entry from the left page.
-
-    The left-page photo often shows the right-page edge (high x values).
-    We restrict to the left 75% of the image to avoid that bleed-through.
-
-    Each entry's y-range starts from the entry-number line and ends just before
-    the next entry-number line.  We include lines at the same y as the entry
-    number itself (the Japanese sentence is often on the same horizontal band).
-    English fragments are sorted by x (left→right) for natural reading order.
+    左ページから {id, exampleJa, exampleEnRaw} を ENTRIES_PER_PAGE 件固定で返す。
+    OCRで検出できなかったスロットは None で埋め、IDのずれを防ぐ。
     """
     xs = [l['x'] for l in lines]
     LEFT_PAGE_MAX_X = max(xs) * 0.75 if xs else float('inf')
     left_lines = [l for l in lines if l['x'] < LEFT_PAGE_MAX_X]
 
-    # Collect all entry-number markers {id, y}
+    # エントリー番号マーカーを収集
     markers = []
     for l in left_lines:
         m = ENTRY_RE.match(l['text'])
         if m:
             markers.append({'id': int(m.group(1)), 'y': l['y']})
     if not markers:
-        return []
+        return [None] * ENTRIES_PER_PAGE
 
-    entries = []
-    for idx, marker in enumerate(markers):
-        y_start = marker['y'] - 5           # include same-line text
-        y_end   = markers[idx + 1]['y'] - 5 if idx + 1 < len(markers) else float('inf')
+    # 検出した最小IDからページの開始IDを特定（例: 1, 11, 21 ...）
+    min_id = min(mk['id'] for mk in markers)
+    base_id = ((min_id - 1) // ENTRIES_PER_PAGE) * ENTRIES_PER_PAGE + 1
+    marker_by_id = {mk['id']: mk for mk in markers}
+
+    slot_entries = []
+    for i in range(ENTRIES_PER_PAGE):
+        entry_id = base_id + i
+        if entry_id not in marker_by_id:
+            slot_entries.append(None)
+            continue
+
+        marker = marker_by_id[entry_id]
+
+        # 次に存在するマーカーのy座標を終端とする
+        y_end = float('inf')
+        for j in range(i + 1, ENTRIES_PER_PAGE):
+            next_id = base_id + j
+            if next_id in marker_by_id:
+                y_end = marker_by_id[next_id]['y'] - 5
+                break
+
+        y_start = marker['y'] - 5
 
         band = [l for l in left_lines
                 if y_start <= l['y'] < y_end
                 and not ENTRY_RE.match(l['text'])]
 
         ex_ja    = ''
-        en_frags = []   # list of (x, text) for left→right sorting
+        en_frags = []
         for l in sorted(band, key=lambda l: l['y']):
             t = l['text'].strip()
             if not t:
@@ -141,13 +154,12 @@ def parse_left(lines):
             elif is_english(t):
                 en_frags.append((l['x'], t))
 
-        # Sort EN fragments left→right so reading order is preserved
         en_frags.sort(key=lambda p: p[0])
         ex_en = ' '.join(t for _, t in en_frags).strip()
 
-        entries.append(dict(id=marker['id'], exampleJa=ex_ja, exampleEnRaw=ex_en))
+        slot_entries.append(dict(id=entry_id, exampleJa=ex_ja, exampleEnRaw=ex_en))
 
-    return entries
+    return slot_entries
 
 
 # ── right page ───────────────────────────────────────────────────────────────
@@ -183,33 +195,61 @@ def is_headword(line):
 
 def parse_right(lines):
     """
-    Extract {english, japanese} per entry from the right page.
-    Headwords are short purely-alphabetic English lines (see is_headword()).
+    右ページから {english, japanese} を ENTRIES_PER_PAGE 件固定で返す。
+    y座標のギャップから欠損行を検出し、欠損スロットは None で埋める。
     """
     if not lines:
-        return []
+        return [None] * ENTRIES_PER_PAGE
 
     headwords = [l for l in lines if is_headword(l)]
     headwords.sort(key=lambda l: l['y'])
 
-    entries = []
-    for idx, hw in enumerate(headwords):
-        y_start = hw['y'] - 5
-        y_end   = headwords[idx + 1]['y'] - 5 if idx + 1 < len(headwords) else hw['y'] + 300
+    if not headwords:
+        return [None] * ENTRIES_PER_PAGE
 
-        # Collect non-English lines in this band for Japanese meaning
+    # y座標のギャップ分析で欠損スロットにNoneを挿入する
+    placed = list(headwords)
+    if len(placed) >= 2:
+        gaps = [placed[i + 1]['y'] - placed[i]['y'] for i in range(len(placed) - 1)]
+        median_gap = sorted(gaps)[len(gaps) // 2]
+
+        # 後ろから走査してギャップが大きい箇所にNoneを挿入
+        i = len(placed) - 1
+        while i > 0:
+            gap = placed[i]['y'] - placed[i - 1]['y']
+            missing = round(gap / median_gap) - 1
+            for _ in range(missing):
+                placed.insert(i, None)
+            i -= 1
+
+    # ENTRIES_PER_PAGE 件になるよう末尾をNoneで埋める
+    while len(placed) < ENTRIES_PER_PAGE:
+        placed.append(None)
+    placed = placed[:ENTRIES_PER_PAGE]
+
+    entries = []
+    for slot_idx, hw in enumerate(placed):
+        if hw is None:
+            entries.append(None)
+            continue
+
+        y_start = hw['y'] - 5
+        y_end = hw['y'] + 300
+        for next_hw in placed[slot_idx + 1:]:
+            if next_hw is not None:
+                y_end = next_hw['y'] - 5
+                break
+
         band = [l for l in lines
                 if y_start <= l['y'] <= y_end and not is_english(l['text'])]
         band.sort(key=lambda l: l['y'])
 
         japanese = ''
-        # Priority 1: POS line with actual meaning content after the POS char
         for l in band:
             t = l['text'].strip()
             if t and t[0] in '名動形副前接間代助' and len(t) > 2:
                 japanese = t[1:].lstrip()
                 break
-        # Priority 2: first non-English line with meaningful content (>3 chars)
         if not japanese:
             for l in sorted(band, key=lambda x: x['y']):
                 t = l['text'].strip()
@@ -237,24 +277,35 @@ def fill_blank(raw, word):
 
 
 def merge(left_entries, right_entries):
-    left_by_id = {e['id']: e for e in left_entries}
-    left_ids   = sorted(left_by_id)
+    """
+    左右ページの ENTRIES_PER_PAGE 件リストを位置で対応させてマージする。
+    左ページのIDを優先し、欠損の場合は位置から推定する。
+    """
+    # base_idを左ページの非Noneエントリーから特定
+    non_null_left = [e for e in left_entries if e is not None]
+    if non_null_left:
+        min_left_id = min(e['id'] for e in non_null_left)
+        base_id = ((min_left_id - 1) // ENTRIES_PER_PAGE) * ENTRIES_PER_PAGE + 1
+    else:
+        base_id = 1
 
     merged = []
-    for idx, right in enumerate(right_entries):
-        if idx < len(left_ids):
-            lid  = left_ids[idx]
-            left = left_by_id[lid]
-        else:
-            lid  = idx + 1
-            left = dict(id=lid, exampleJa='', exampleEnRaw='')
+    for idx in range(ENTRIES_PER_PAGE):
+        left  = left_entries[idx]  if idx < len(left_entries)  else None
+        right = right_entries[idx] if idx < len(right_entries) else None
+
+        entry_id  = left['id']           if left  is not None else base_id + idx
+        english   = right['english']     if right is not None else ''
+        japanese  = right['japanese']    if right is not None else ''
+        ex_ja     = left['exampleJa']    if left  is not None else ''
+        ex_en_raw = left['exampleEnRaw'] if left  is not None else ''
 
         merged.append(dict(
-            id        = lid,
-            english   = right['english'],
-            japanese  = right['japanese'],
-            exampleJa = left.get('exampleJa', ''),
-            exampleEn = fill_blank(left.get('exampleEnRaw', ''), right['english']),
+            id        = entry_id,
+            english   = english,
+            japanese  = japanese,
+            exampleJa = ex_ja,
+            exampleEn = fill_blank(ex_en_raw, english),
         ))
     return merged
 
