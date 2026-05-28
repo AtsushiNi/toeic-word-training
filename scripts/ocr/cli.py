@@ -85,7 +85,12 @@ def process_spread(left_path, right_path, use_preprocess=True):
     left_bands,  left_reliable  = detect_row_bands(left_img)
     right_bands, right_reliable = detect_row_bands(right_img)
 
-    # 信頼性が低い場合（ボーダー間隔のばらつきが大きい）はギャップ分析にフォールバック
+    # 信頼性が低い場合（ボーダー間隔のばらつきが大きい）はフォールバックを使用
+    # 左ページ: None にするとIDマーカーのy座標ベースの範囲推定を使用する
+    if not left_reliable:
+        print("  左ページ: 枠線ばらつき大 → IDマーカーベースの解析を使用")
+        left_bands = None
+    # 右ページ: None にするとy座標ギャップ分析を使用する
     if not right_reliable:
         print("  右ページ: 枠線ばらつき大 → ギャップ分析を使用")
         right_bands = None

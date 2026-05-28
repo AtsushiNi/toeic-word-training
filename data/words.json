@@ -1,0 +1,1402 @@
+[
+  {
+    "id": 1,
+    "english": "update",
+    "japanese": "更新する",
+    "exampleJa": "交通の最新情報",
+    "exampleEn": "traffic update S"
+  },
+  {
+    "id": 2,
+    "english": "branch",
+    "japanese": "、 TOEICの世界にはブラック企業は存在せず、",
+    "exampleJa": "新しい支店をオープンする",
+    "exampleEn": "open a new branch"
+  },
+  {
+    "id": 3,
+    "english": "paid",
+    "japanese": "有給の、支払い済みの",
+    "exampleJa": "有給休暇",
+    "exampleEn": "paid leave"
+  },
+  {
+    "id": 4,
+    "english": "unfortunately",
+    "japanese": "残念なことに、残念ながら",
+    "exampleJa": "残念なことに、いくつか問題があります。",
+    "exampleEn": "unfortunately there are some problems."
+  },
+  {
+    "id": 5,
+    "english": "original",
+    "japanese": "オリジナル、原本",
+    "exampleJa": "元の状態で",
+    "exampleEn": "in condition"
+  },
+  {
+    "id": 6,
+    "english": "rent",
+    "japanese": "家賃動 賃貸借する",
+    "exampleJa": "家賃の値上げ",
+    "exampleEn": "ar increase"
+  },
+  {
+    "id": 7,
+    "english": "memo",
+    "japanese": "社内文書",
+    "exampleJa": "社内文書を書く",
+    "exampleEn": "write a memo"
+  },
+  {
+    "id": 8,
+    "english": "luggage",
+    "japanese": "旅行かばん、手荷物",
+    "exampleJa": "旅行かばんを買い求める",
+    "exampleEn": "shop forl-"
+  },
+  {
+    "id": 9,
+    "english": "editor",
+    "japanese": "編集者",
+    "exampleJa": "新聞の編集者",
+    "exampleEn": "a newspaper"
+  },
+  {
+    "id": 10,
+    "english": "exhibition",
+    "japanese": "各展示会、展示物、展示",
+    "exampleJa": "美術展",
+    "exampleEn": "an art exhibition"
+  },
+  {
+    "id": 11,
+    "english": "leading",
+    "japanese": "首位の、一流の",
+    "exampleJa": "トップの会社",
+    "exampleEn": "al- company"
+  },
+  {
+    "id": 12,
+    "english": "organization",
+    "japanese": "四 organize （取りまとめる、組織化する）",
+    "exampleJa": "組織を率いる",
+    "exampleEn": "lead an organization"
+  },
+  {
+    "id": 13,
+    "english": "release",
+    "japanese": "limit （制限する、制限、境）",
+    "exampleJa": "ニューアルバムを発売する",
+    "exampleEn": "a new album"
+  },
+  {
+    "id": 14,
+    "english": "limited",
+    "japanese": "限られた",
+    "exampleJa": "期間限定で",
+    "exampleEn": "for a i-time"
+  },
+  {
+    "id": 15,
+    "english": "procedure",
+    "japanese": "process （プロセス、過程）",
+    "exampleJa": "通常の手続き",
+    "exampleEn": "a normal"
+  },
+  {
+    "id": 16,
+    "english": "experienced",
+    "japanese": "経験豊富な",
+    "exampleJa": "経験豊かなエンジニア",
+    "exampleEn": "an engineer"
+  },
+  {
+    "id": 17,
+    "english": "personnel",
+    "japanese": "社員、人事部",
+    "exampleJa": "全社員",
+    "exampleEn": "all company personnel"
+  },
+  {
+    "id": 18,
+    "english": "author",
+    "japanese": "著者、作者",
+    "exampleJa": "人気本の著者",
+    "exampleEn": "the author - of a popular book"
+  },
+  {
+    "id": 19,
+    "english": "benefit",
+    "japanese": "特典、福利厚生",
+    "exampleJa": "従業員の福利厚生",
+    "exampleEn": "employee benefit -S"
+  },
+  {
+    "id": 20,
+    "english": "focus",
+    "japanese": "（糖類等を～に集中させる、重点を置く名焦点、集中",
+    "exampleJa": "1点に集中する",
+    "exampleEn": "focus on one point"
+  },
+  {
+    "id": 21,
+    "english": "participate",
+    "japanese": "詞を伴い、participate は前置詞inが必要と",
+    "exampleJa": "",
+    "exampleEn": "participate in the workshop"
+  },
+  {
+    "id": 22,
+    "english": "cause",
+    "japanese": "money for a good cause（慈善のためのお金）",
+    "exampleJa": "問題の原因",
+    "exampleEn": "the cause i of the problem"
+  },
+  {
+    "id": 23,
+    "english": "degree",
+    "japanese": "もある。 to a certain degree （ある程度）",
+    "exampleJa": "ジャーナリズムの学位",
+    "exampleEn": "ad in journalism"
+  },
+  {
+    "id": 24,
+    "english": "directly",
+    "japanese": "E direct （直接の）",
+    "exampleJa": "ウェブサイトから直接購入する",
+    "exampleEn": "purchase （ - from a Web site"
+  },
+  {
+    "id": 25,
+    "english": "ite",
+    "japanese": "直接",
+    "exampleJa": "テレビ番組の司会者",
+    "exampleEn": "the h- - of a television show"
+  },
+  {
+    "id": 26,
+    "english": "host",
+    "japanese": "司会者動主催する",
+    "exampleJa": "その分野の専門家",
+    "exampleEn": "an in the field"
+  },
+  {
+    "id": 27,
+    "english": "expert",
+    "japanese": "なアドバイス） ■ expertise （専門知識、専門スキ",
+    "exampleJa": "我々はあなたの知識に感心した。",
+    "exampleEn": "We were i. -ed by your knowledge."
+  },
+  {
+    "id": 28,
+    "english": "impress",
+    "japanese": "感心させる、好印象を与える",
+    "exampleJa": "主に鉄鋼業界で働く",
+    "exampleEn": "work m- in the steel industry"
+  },
+  {
+    "id": 29,
+    "english": "mainly",
+    "japanese": "",
+    "exampleJa": "提案を行う",
+    "exampleEn": "make I-S"
+  },
+  {
+    "id": 30,
+    "english": "iry",
+    "japanese": "主に",
+    "exampleJa": "納入業者との関係",
+    "exampleEn": "relationships with s. S"
+  },
+  {
+    "id": 31,
+    "english": "document",
+    "japanese": "が、決して上司に叱責（しっせき）されることは",
+    "exampleJa": "従業員に規則に関して再確認する",
+    "exampleEn": "an important document"
+  },
+  {
+    "id": 32,
+    "english": "remind",
+    "japanese": "",
+    "exampleJa": "作業員は制服の着用を求められます。",
+    "exampleEn": "remind - employees about the policy"
+  },
+  {
+    "id": 33,
+    "english": "licy",
+    "japanese": "（従業員の皆さんに再確認です）",
+    "exampleJa": "",
+    "exampleEn": "Workers are r- d to wear uniforms"
+  },
+  {
+    "id": 34,
+    "english": "require",
+    "japanese": "勤求める、要求する",
+    "exampleJa": "営業担当者",
+    "exampleEn": "a sales require"
+  },
+  {
+    "id": 35,
+    "english": "representative",
+    "japanese": "調用法がある単語としては、initiative （計画、主",
+    "exampleJa": "梱包エリア",
+    "exampleEn": "the p area"
+  },
+  {
+    "id": 36,
+    "english": "packaging",
+    "japanese": "梱包、パッケージ",
+    "exampleJa": "職務内容の説明",
+    "exampleEn": "a jobd"
+  },
+  {
+    "id": 37,
+    "english": "description",
+    "japanese": "describe（説明する、描写する）",
+    "exampleJa": "不動産の管理人",
+    "exampleEn": "ap manager"
+  },
+  {
+    "id": 38,
+    "english": "property",
+    "japanese": "不動産、資産",
+    "exampleJa": "内線4649にお電話ください。",
+    "exampleEn": "Call me at"
+  },
+  {
+    "id": 39,
+    "english": "extension",
+    "japanese": "内線、延長",
+    "exampleJa": "仕事について問い合わせる",
+    "exampleEn": "about a job"
+  },
+  {
+    "id": 40,
+    "english": "inquire",
+    "japanese": "寿ねる、問い合わせる",
+    "exampleJa": "商品を陳列する",
+    "exampleEn": "display m-"
+  },
+  {
+    "id": 41,
+    "english": "nighily",
+    "japanese": "を除き、通常、動詞ではなく形容詞を修飾する。",
+    "exampleJa": "非常に成功しているビジネス",
+    "exampleEn": "ah- successful business"
+  },
+  {
+    "id": 42,
+    "english": "result",
+    "japanese": "結果",
+    "exampleJa": "そのキャンペーンは成功という結果になった。",
+    "exampleEn": "The campaign ed in success"
+  },
+  {
+    "id": 43,
+    "english": "assistance",
+    "japanese": "assist （助ける）",
+    "exampleJa": "ご支援ありがとうございます。",
+    "exampleEn": "Thank you for your assistance"
+  },
+  {
+    "id": 44,
+    "english": "encourage",
+    "japanese": "一生懸命勉強することを勧めた） 関 encouraging news",
+    "exampleJa": "従業員がイベントに参加することを奨励します。",
+    "exampleEn": "Employees are --d to attend the even."
+  },
+  {
+    "id": 45,
+    "english": "individual",
+    "japanese": "題でも頻出。 individually （個別に）",
+    "exampleJa": "会社の一人一人の個人",
+    "exampleEn": "each individual -- in the company"
+  },
+  {
+    "id": 46,
+    "english": "laboratory",
+    "japanese": "研究所、実験室",
+    "exampleJa": "研究所に入る時",
+    "exampleEn": "when entering the laboratory"
+  },
+  {
+    "id": 47,
+    "english": "consider",
+    "japanese": "考える、検討する",
+    "exampleJa": "日本での勤務を検討する",
+    "exampleEn": "working in Japan"
+  },
+  {
+    "id": 48,
+    "english": "headquarters",
+    "japanese": "詞のshipment （出荷、出荷物）も頻出。",
+    "exampleJa": "本社をボストンに移転する",
+    "exampleEn": "move the headquarters to Boston"
+  },
+  {
+    "id": 49,
+    "english": "ship",
+    "japanese": "出荷する名船",
+    "exampleJa": "注文を出荷する準備ができました。",
+    "exampleEn": "We are ready to ship your order."
+  },
+  {
+    "id": 50,
+    "english": "commercial",
+    "japanese": "※TOEICでは、「CM」の意味の名詞より、形",
+    "exampleJa": "商業ビル",
+    "exampleEn": "buildings"
+  },
+  {
+    "id": 51,
+    "english": "device",
+    "japanese": "ケースが多い。",
+    "exampleJa": "医療機器",
+    "exampleEn": "a medical device"
+  },
+  {
+    "id": 52,
+    "english": "intended",
+    "japanese": "intend （意図する）図 intention （意図）",
+    "exampleJa": "このお知らせは誰に向けられていますか。",
+    "exampleEn": "For whom is the notice intended"
+  },
+  {
+    "id": 53,
+    "english": "brochure",
+    "japanese": "パンフレット",
+    "exampleJa": "製品パンフレット",
+    "exampleEn": "a product brochure"
+  },
+  {
+    "id": 54,
+    "english": "mail",
+    "japanese": "みに、TOEICの世界には、顧客に無断で割高",
+    "exampleJa": "速達郵便で",
+    "exampleEn": "by express mail"
+  },
+  {
+    "id": 55,
+    "english": "prefer",
+    "japanese": "～を（…・・よりも）好む",
+    "exampleJa": "私はパートタイムで働く方が好きです。",
+    "exampleEn": "to work part-time."
+  },
+  {
+    "id": 56,
+    "english": "response",
+    "japanese": "る。動詞のrespond（返答する、返事をする）も頻出。",
+    "exampleJa": "お手紙へのご返事です。",
+    "exampleEn": "I'm writing in response to your letter."
+  },
+  {
+    "id": 57,
+    "english": "region",
+    "japanese": "地域",
+    "exampleJa": "その地域の会社",
+    "exampleEn": "companies in the region"
+  },
+  {
+    "id": 58,
+    "english": "aukau",
+    "japanese": "",
+    "exampleJa": "ミュージアムへの寄付",
+    "exampleEn": "d s to aukau museum"
+  },
+  {
+    "id": 59,
+    "english": "donation",
+    "japanese": "donate（寄付する）donor （寄付者）",
+    "exampleJa": "第3四半期",
+    "exampleEn": "the third"
+  },
+  {
+    "id": 60,
+    "english": "quarter",
+    "japanese": "四半期",
+    "exampleJa": "賃貸契約書",
+    "exampleEn": "a rental a-"
+  },
+  {
+    "id": 61,
+    "english": "journal",
+    "japanese": "※「〜ジャーナル」と日本語の雑誌名にもなっ",
+    "exampleJa": "科学の専門誌",
+    "exampleEn": "a scientific journal"
+  },
+  {
+    "id": 62,
+    "english": "distribute",
+    "japanese": "専門誌",
+    "exampleJa": "書類を配布する",
+    "exampleEn": "a document"
+  },
+  {
+    "id": 63,
+    "english": "potential",
+    "japanese": "見込みがある、潜在的な",
+    "exampleJa": "見込み客",
+    "exampleEn": "potential customers"
+  },
+  {
+    "id": 64,
+    "english": "reschedule",
+    "japanese": "TOEICの世界では、病院の受付からの電話の多く",
+    "exampleJa": "アポを予定変更する",
+    "exampleEn": "an appointment"
+  },
+  {
+    "id": 65,
+    "english": "renew",
+    "japanese": "更新する",
+    "exampleJa": "契約を更新する",
+    "exampleEn": "a contract"
+  },
+  {
+    "id": 66,
+    "english": "warehouse",
+    "japanese": "倉庫",
+    "exampleJa": "倉庫から出荷する",
+    "exampleEn": "ship from aw"
+  },
+  {
+    "id": 67,
+    "english": "refund",
+    "japanese": "返金",
+    "exampleJa": "全額返金",
+    "exampleEn": "a full refund"
+  },
+  {
+    "id": 68,
+    "english": "advise",
+    "japanese": "that SV. （～してください）の形も重要。",
+    "exampleJa": "聞き手は何をするよう勧められていますか。",
+    "exampleEn": "What are listeners dto do？"
+  },
+  {
+    "id": 69,
+    "english": "immediately",
+    "japanese": "l immediate （すぐの、差し迫った、近い",
+    "exampleJa": "チケットは即売り切れた。",
+    "exampleEn": "The tickets sold out"
+  },
+  {
+    "id": 70,
+    "english": "",
+    "japanese": "",
+    "exampleJa": "市議会",
+    "exampleEn": "the city C"
+  },
+  {
+    "id": 71,
+    "english": "broadcast",
+    "japanese": "※パート4では、アルバムを出した歌手や、本",
+    "exampleJa": "私は従業員の研修を担当している。",
+    "exampleEn": "The program is usually broadcast on Saturdays"
+  },
+  {
+    "id": 72,
+    "english": "responsible",
+    "japanese": "放送する名 放送",
+    "exampleJa": "",
+    "exampleEn": "Iam responsible for training employees."
+  },
+  {
+    "id": 73,
+    "english": "avoid",
+    "japanese": "※不定詞ではなく動名詞を取ることも押さえる。",
+    "exampleJa": "時間の無駄遣いを避ける",
+    "exampleEn": "a： wasting time"
+  },
+  {
+    "id": 74,
+    "english": "effective",
+    "japanese": "効果的な",
+    "exampleJa": "効果的な広告キャンペーン",
+    "exampleEn": "advertising campaigns"
+  },
+  {
+    "id": 75,
+    "english": "invitation",
+    "japanese": "招待（状）",
+    "exampleJa": "招待状を受け取る",
+    "exampleEn": "receive an"
+  },
+  {
+    "id": 76,
+    "english": "reduce",
+    "japanese": "※「減らす」の意味でも出る。国 reduce stock",
+    "exampleJa": "値段を下げる",
+    "exampleEn": "prices"
+  },
+  {
+    "id": 77,
+    "english": "vehicle",
+    "japanese": "乗り物、車両",
+    "exampleJa": "乗り物を駐車する",
+    "exampleEn": "park av."
+  },
+  {
+    "id": 78,
+    "english": "eficient",
+    "japanese": "効率的な",
+    "exampleJa": "エネルギーの効率的な使用",
+    "exampleEn": "use of energy"
+  },
+  {
+    "id": 79,
+    "english": "manufacturer",
+    "japanese": "製造）、",
+    "exampleJa": "自動車メーカー",
+    "exampleEn": "a car manufacturer"
+  },
+  {
+    "id": 80,
+    "english": "",
+    "japanese": "",
+    "exampleJa": "快適な部屋とフレンドリーなスタッフ",
+    "exampleEn": "rooms and friendly staff"
+  },
+  {
+    "id": 81,
+    "english": "correct",
+    "japanese": "修正する",
+    "exampleJa": "正しい住所",
+    "exampleEn": "the correct address"
+  },
+  {
+    "id": 82,
+    "english": "downtown",
+    "japanese": "■ビジネスや商業の中心地（下町ではない）を指",
+    "exampleJa": "中心街のレストラン",
+    "exampleEn": "restaurants"
+  },
+  {
+    "id": 83,
+    "english": "method",
+    "japanese": "方法",
+    "exampleJa": "支払い方法",
+    "exampleEn": "the method of payment"
+  },
+  {
+    "id": 84,
+    "english": "entire",
+    "japanese": "感全体の",
+    "exampleJa": "全スタッフ",
+    "exampleEn": "the - staff"
+  },
+  {
+    "id": 85,
+    "english": "range",
+    "japanese": "範囲",
+    "exampleJa": "広範囲のサービス",
+    "exampleEn": "a wide range of services"
+  },
+  {
+    "id": 86,
+    "english": "setting",
+    "japanese": "環境",
+    "exampleJa": "美しい環境にあるホテル",
+    "exampleEn": "a hotel in a beautiful setting"
+  },
+  {
+    "id": 87,
+    "english": "apologize",
+    "japanese": "おわびする",
+    "exampleJa": "ご不便をおかけしますことをおわびします。",
+    "exampleEn": "We apologize for the inconvenience."
+  },
+  {
+    "id": 88,
+    "english": "frequent",
+    "japanese": "頻繁な",
+    "exampleJa": "インターネットの頻繁な使用",
+    "exampleEn": "use of the Internet"
+  },
+  {
+    "id": 89,
+    "english": "promotion",
+    "japanese": "昇進、販売促進",
+    "exampleJa": "テックスの営業マネージャーへの昇進",
+    "exampleEn": "Tex's -- to sales manager"
+  },
+  {
+    "id": 90,
+    "english": "lrigardini",
+    "japanese": "～に関する",
+    "exampleJa": "あなたのご注文に関して",
+    "exampleEn": "your order"
+  },
+  {
+    "id": 91,
+    "english": "temporary",
+    "japanese": "となった。@ temporarily （一時的に）",
+    "exampleJa": "",
+    "exampleEn": "workers"
+  },
+  {
+    "id": 92,
+    "english": "traditional",
+    "japanese": "伝統的な、従来の",
+    "exampleJa": "伝統的なイタリア料理",
+    "exampleEn": "traditional Italian dishes"
+  },
+  {
+    "id": 93,
+    "english": "admission",
+    "japanese": "入場、入場料、入場許可",
+    "exampleJa": "メンバーは入場無料です。",
+    "exampleEn": "admission is free for all members."
+  },
+  {
+    "id": 94,
+    "english": "fit",
+    "japanese": "合う、入る",
+    "exampleJa": "その部屋には50人が入る。",
+    "exampleEn": "The room can fit -- 50 people."
+  },
+  {
+    "id": 95,
+    "english": "reference",
+    "japanese": "照会先、照会、参照",
+    "exampleJa": "照会先に連絡を取る",
+    "exampleEn": "contact a reference"
+  },
+  {
+    "id": 96,
+    "english": "status",
+    "japanese": "状況、地位",
+    "exampleJa": "配送状況",
+    "exampleEn": "shipment status"
+  },
+  {
+    "id": 97,
+    "english": "fuel",
+    "japanese": "燃料",
+    "exampleJa": "燃料のコスト",
+    "exampleEn": "fuel costs"
+  },
+  {
+    "id": 98,
+    "english": "nearly",
+    "japanese": "なる可能性があるので、「約2年」ではなく12",
+    "exampleJa": "2年近く",
+    "exampleEn": "nearly two years"
+  },
+  {
+    "id": 99,
+    "english": "cafeteria",
+    "japanese": "社員食堂",
+    "exampleJa": "昼食のために社員食堂に集まる",
+    "exampleEn": "meet in the cafeteria for lunch"
+  },
+  {
+    "id": 100,
+    "english": "determine",
+    "japanese": "決定する、判断する、決心する",
+    "exampleJa": "製品の売り方を決定する",
+    "exampleEn": "2 - how to sell the product"
+  },
+  {
+    "id": 101,
+    "english": "anyway",
+    "japanese": "とにかく",
+    "exampleJa": "とにかくやってみよう。",
+    "exampleEn": "Let's try anyway"
+  },
+  {
+    "id": 102,
+    "english": "following",
+    "japanese": "～に続いで形次の、以下の",
+    "exampleJa": "スピーチに続いて、夕食をとった。",
+    "exampleEn": "following the speech, we had dinner."
+  },
+  {
+    "id": 103,
+    "english": "refer",
+    "japanese": "参照する、証及する、（人を紹介する",
+    "exampleJa": "地図を参照してください。",
+    "exampleEn": "J3 Please refer to the map."
+  },
+  {
+    "id": 104,
+    "english": "available",
+    "japanese": "入手できる、利用できる、購入できる、手が空いている",
+    "exampleJa": "チケットはオンラインで入手可能です。",
+    "exampleEn": "Tickets are available online."
+  },
+  {
+    "id": 105,
+    "english": "depariment",
+    "japanese": "部門、売り場",
+    "exampleJa": "営業部",
+    "exampleEn": "the sales depariment"
+  },
+  {
+    "id": 106,
+    "english": "conference",
+    "japanese": "会議",
+    "exampleJa": "大きな会議室",
+    "exampleEn": "alarge conference ■- room"
+  },
+  {
+    "id": 107,
+    "english": "according to",
+    "japanese": "※LR両セクションの設問文で頻出。「（規則等）",
+    "exampleJa": "メールによると",
+    "exampleEn": "to the e-mail"
+  },
+  {
+    "id": 108,
+    "english": "likely",
+    "japanese": "～しそうだ",
+    "exampleJa": "女性はおそらく誰ですか。",
+    "exampleEn": "Who most |--=- is the woman？"
+  },
+  {
+    "id": 109,
+    "english": "offer",
+    "japanese": "を取ることも押さえる。例 We offered him a joo.",
+    "exampleJa": "男性は何をすることを申し出ていますか。",
+    "exampleEn": "What does the man"
+  },
+  {
+    "id": 110,
+    "english": "equipment",
+    "japanese": "※パート1でも頻出。",
+    "exampleJa": "新しいオフィス機器",
+    "exampleEn": "new office"
+  },
+  {
+    "id": 111,
+    "english": "provice",
+    "japanese": "提供する",
+    "exampleJa": "あなたのメールアドレスを提供してください。",
+    "exampleEn": "Please"
+  },
+  {
+    "id": 112,
+    "english": "local",
+    "japanese": "地元の人",
+    "exampleJa": "地元の会社",
+    "exampleEn": "businesses"
+  },
+  {
+    "id": 113,
+    "english": "purchase",
+    "japanese": "購入品",
+    "exampleJa": "チケットを購入する",
+    "exampleEn": "purchase tickets"
+  },
+  {
+    "id": 114,
+    "english": "opening",
+    "japanese": "※「開業、開店」の意味でも出る。図 the grand",
+    "exampleJa": "仕事の空き",
+    "exampleEn": "a jobo."
+  },
+  {
+    "id": 115,
+    "english": "construction",
+    "japanese": "建設",
+    "exampleJa": "建設プロジェクト",
+    "exampleEn": "project"
+  },
+  {
+    "id": 116,
+    "english": "tour",
+    "japanese": "見学する、旅行する",
+    "exampleJa": "工場を見学している間",
+    "exampleEn": "whilet-"
+  },
+  {
+    "id": 117,
+    "english": "research",
+    "japanese": "研究、調査動研究する、調査する",
+    "exampleJa": "市場調査",
+    "exampleEn": "market research"
+  },
+  {
+    "id": 118,
+    "english": "attend",
+    "japanese": "attendance （出席、出席者数）関 attendee （出席者）",
+    "exampleJa": "会議に出席する",
+    "exampleEn": "attend a meeting"
+  },
+  {
+    "id": 119,
+    "english": "delivery",
+    "japanese": "配達（物）",
+    "exampleJa": "配達日を変更する",
+    "exampleEn": "change a delivery"
+  },
+  {
+    "id": 120,
+    "english": "recently",
+    "japanese": "最近",
+    "exampleJa": "私は最近プリンターを買った。",
+    "exampleEn": "bought a printer."
+  },
+  {
+    "id": 121,
+    "english": "indicate",
+    "japanese": "示す",
+    "exampleJa": "",
+    "exampleEn": ""
+  },
+  {
+    "id": 122,
+    "english": "employee",
+    "japanese": "社員、従業員",
+    "exampleJa": "ホテルの従業員",
+    "exampleEn": "an employee of a hotel"
+  },
+  {
+    "id": 123,
+    "english": "additional",
+    "japanese": "addition （追加、新",
+    "exampleJa": "",
+    "exampleEn": "request additional --- staff"
+  },
+  {
+    "id": 124,
+    "english": "survey",
+    "japanese": "アンケート調査勤アンケート調査を行う",
+    "exampleJa": "顧客アンケート調査",
+    "exampleEn": "a customer survey"
+  },
+  {
+    "id": 125,
+    "english": "review",
+    "japanese": ".検討、論評",
+    "exampleJa": "報告書に目を通す",
+    "exampleEn": "a repor"
+  },
+  {
+    "id": 126,
+    "english": "production",
+    "japanese": "生産、作品",
+    "exampleJa": "生産エリア",
+    "exampleEn": "the production area"
+  },
+  {
+    "id": 127,
+    "english": "located",
+    "japanese": "位置して",
+    "exampleJa": "地下鉄の駅近くの便利な場所にある",
+    "exampleEn": "conveniently 1-"
+  },
+  {
+    "id": 128,
+    "english": "detail",
+    "japanese": "詳細",
+    "exampleJa": "計画の詳細",
+    "exampleEn": "-s of a plan"
+  },
+  {
+    "id": 129,
+    "english": "announce",
+    "japanese": "announcement （発表、お知らせ）",
+    "exampleJa": "入賞者を発表する",
+    "exampleEn": "announce the winners"
+  },
+  {
+    "id": 130,
+    "english": "repair",
+    "japanese": "提なので、修理店は常に大忙しである。",
+    "exampleJa": "コンピュータの修理店",
+    "exampleEn": "a computer repair"
+  },
+  {
+    "id": 131,
+    "english": "increase",
+    "japanese": "増える、増やす",
+    "exampleJa": "",
+    "exampleEn": ""
+  },
+  {
+    "id": 132,
+    "english": "include",
+    "japanese": "を含む毎日営業する）",
+    "exampleJa": "",
+    "exampleEn": "What is NOT include"
+  },
+  {
+    "id": 133,
+    "english": "currently",
+    "japanese": "現在",
+    "exampleJa": "その品は現在在庫切れです。",
+    "exampleEn": "The item is （"
+  },
+  {
+    "id": 134,
+    "english": "advertising",
+    "japanese": "広告（業）、宣伝（活動）",
+    "exampleJa": "広告キャンペーン",
+    "exampleEn": "ana campaign"
+  },
+  {
+    "id": 135,
+    "english": "charge",
+    "japanese": "料金、責任",
+    "exampleJa": "そのサービスには50ドルを請求します。",
+    "exampleEn": "We $50 for the service."
+  },
+  {
+    "id": 136,
+    "english": "expect",
+    "japanese": "予期する、予定する",
+    "exampleJa": "加さんは明日到着する予定だ。",
+    "exampleEn": "Mr. Kato is"
+  },
+  {
+    "id": 137,
+    "english": "firm",
+    "japanese": "（会計事務所）、architectural firm （建築事務所）、",
+    "exampleJa": "家族経営の会社",
+    "exampleEn": "a family-owned firm"
+  },
+  {
+    "id": 138,
+    "english": "client",
+    "japanese": "顧客、クライアント",
+    "exampleJa": "顧客を訪問する",
+    "exampleEn": "visit a client"
+  },
+  {
+    "id": 139,
+    "english": "financial",
+    "japanese": "お金の、財務の、金融の",
+    "exampleJa": "政府からのお金の支援",
+    "exampleEn": "fria support from the government"
+  },
+  {
+    "id": 140,
+    "english": "annual",
+    "japanese": "を報告するレポートのこと。",
+    "exampleJa": "年次報告書",
+    "exampleEn": "ana- report"
+  },
+  {
+    "id": 141,
+    "english": "payment",
+    "japanese": "支払い",
+    "exampleJa": "今年の予算",
+    "exampleEn": "make an online payment"
+  },
+  {
+    "id": 142,
+    "english": "budget",
+    "japanese": "予算動予算に計上する",
+    "exampleJa": "応募書類に記入する",
+    "exampleEn": "this year's"
+  },
+  {
+    "id": 143,
+    "english": "application",
+    "japanese": "※「記入する」の意味のfill outも頻出。関連",
+    "exampleJa": "契約に署名する前に",
+    "exampleEn": "fill out an application"
+  },
+  {
+    "id": 144,
+    "english": "contract",
+    "japanese": "契約（書）",
+    "exampleJa": "",
+    "exampleEn": "before signing ac"
+  },
+  {
+    "id": 145,
+    "english": "performance",
+    "japanese": "例 under new management （新しい経営陣の",
+    "exampleJa": "経営セミナー",
+    "exampleEn": "a man - seminar"
+  },
+  {
+    "id": 146,
+    "english": "pleased",
+    "japanese": "業績、仕事ぶり、性能、公演",
+    "exampleJa": "従業員の成績",
+    "exampleEn": "an employee's pleased"
+  },
+  {
+    "id": 147,
+    "english": "confirm",
+    "japanese": "喜んで、満足して",
+    "exampleJa": "最終結果に満足している。",
+    "exampleEn": "We are p--"
+  },
+  {
+    "id": 148,
+    "english": "award",
+    "japanese": "確認する",
+    "exampleJa": "支払いを確認する",
+    "exampleEn": "award payment"
+  },
+  {
+    "id": 149,
+    "english": "clothing",
+    "japanese": "賞勤授与する",
+    "exampleJa": "授賞式",
+    "exampleEn": "a -s ceremony"
+  },
+  {
+    "id": 150,
+    "english": "iklouoinj",
+    "japanese": "※衣類全般を指す不可算名詞。",
+    "exampleJa": "衣料品店",
+    "exampleEn": "aC- store"
+  },
+  {
+    "id": 151,
+    "english": "display",
+    "japanese": "展示する",
+    "exampleJa": "0う",
+    "exampleEn": "products on display"
+  },
+  {
+    "id": 152,
+    "english": "candidate",
+    "japanese": "候補者",
+    "exampleJa": "合格した候補者",
+    "exampleEn": "a successful candidate"
+  },
+  {
+    "id": 153,
+    "english": "state",
+    "japanese": "※設問文で頻出。",
+    "exampleJa": "ホテルについて何が述べられていますか。",
+    "exampleEn": "What is state -d about the hotel？"
+  },
+  {
+    "id": 154,
+    "english": "exhibit",
+    "japanese": "※動詞でも出る。",
+    "exampleJa": "博物館の展示物",
+    "exampleEn": "a museum exhibit"
+  },
+  {
+    "id": 155,
+    "english": "x",
+    "japanese": "を行うための集まり」を指す。",
+    "exampleJa": "質疑応答の時間",
+    "exampleEn": "a Q&AS-"
+  },
+  {
+    "id": 156,
+    "english": "note",
+    "japanese": "注意する、述べる",
+    "exampleJa": "値段は変更になる場合があるので、注意してください",
+    "exampleEn": "Please note - that prices may change"
+  },
+  {
+    "id": 157,
+    "english": "process",
+    "japanese": "詞も頻出。",
+    "exampleJa": "注文を処理する",
+    "exampleEn": "U5 an order"
+  },
+  {
+    "id": 158,
+    "english": "instruction",
+    "japanese": "説明書、説明、指示",
+    "exampleJa": "説明書をすべてお読みください。",
+    "exampleEn": "Please read all the instruction"
+  },
+  {
+    "id": 159,
+    "english": "membership",
+    "japanese": "会員（であること）、会員資格、会員数",
+    "exampleJa": "会員登録する",
+    "exampleEn": "sign up for membership"
+  },
+  {
+    "id": 160,
+    "english": "leidsansu",
+    "japanese": "各代理店、機関",
+    "exampleJa": "旅行代理店",
+    "exampleEn": "a travel"
+  },
+  {
+    "id": 161,
+    "english": "baseo",
+    "japanese": "拠点のある、基づく",
+    "exampleJa": "シアトルに拠点を置く会社",
+    "exampleEn": "a Seattle-baseo"
+  },
+  {
+    "id": 162,
+    "english": "facility",
+    "japanese": "施設",
+    "exampleJa": "研究施設",
+    "exampleEn": "a research f-=."
+  },
+  {
+    "id": 163,
+    "english": "advance",
+    "japanese": "進歩、前進",
+    "exampleJa": "事前の告知",
+    "exampleEn": "a-= - notice"
+  },
+  {
+    "id": 164,
+    "english": "committee",
+    "japanese": "委員会",
+    "exampleJa": "委員会に入る",
+    "exampleEn": "joinac"
+  },
+  {
+    "id": 165,
+    "english": "successful",
+    "japanese": "SuCceSS （成功）",
+    "exampleJa": "",
+    "exampleEn": "The event was successful"
+  },
+  {
+    "id": 166,
+    "english": "excellent",
+    "japanese": "素晴らしい",
+    "exampleJa": "素晴らしいサービス",
+    "exampleEn": "service"
+  },
+  {
+    "id": 167,
+    "english": "industry",
+    "japanese": "産業、業界",
+    "exampleJa": "ファッション業界",
+    "exampleEn": "the fashion industry"
+  },
+  {
+    "id": 168,
+    "english": "fee",
+    "japanese": "料金",
+    "exampleJa": "延滞料金を払う",
+    "exampleEn": "pay a late"
+  },
+  {
+    "id": 169,
+    "english": "accept",
+    "japanese": "身分証明）図 acceptance（受け入れること、合格）",
+    "exampleJa": "オファーを受け入れる",
+    "exampleEn": "a=m an offer"
+  },
+  {
+    "id": 170,
+    "english": "upcoming",
+    "japanese": "今度の",
+    "exampleJa": "今度のイベントの準備をする",
+    "exampleEn": "prepare for an u-i-"
+  },
+  {
+    "id": 171,
+    "english": "latest",
+    "japanese": "最新の",
+    "exampleJa": "村上春樹の最新の小説",
+    "exampleEn": "Haruki Murakami's |-"
+  },
+  {
+    "id": 172,
+    "english": "submit",
+    "japanese": "※LR両セクションで頻出。",
+    "exampleJa": "レポートを提出する",
+    "exampleEn": "S-am i- a report"
+  },
+  {
+    "id": 173,
+    "english": "transportation",
+    "japanese": "輸送手段",
+    "exampleJa": "公共の交通機関を利用する",
+    "exampleEn": "use public transportation"
+  },
+  {
+    "id": 174,
+    "english": "resume",
+    "japanese": "履歴書",
+    "exampleJa": "履歴書を送る",
+    "exampleEn": "send ar-"
+  },
+  {
+    "id": 175,
+    "english": "executive",
+    "japanese": "重役 形重役（用）の、高級な",
+    "exampleJa": "会社の重役",
+    "exampleEn": "a company"
+  },
+  {
+    "id": 176,
+    "english": "introduce",
+    "japanese": "導入する、紹介する",
+    "exampleJa": "新たな商品ラインを導入する",
+    "exampleEn": "a new line of products"
+  },
+  {
+    "id": 177,
+    "english": "previous",
+    "japanese": "前の、以前の",
+    "exampleJa": "以前の経験がない",
+    "exampleEn": "0rr have no previous experience"
+  },
+  {
+    "id": 178,
+    "english": "proposal",
+    "japanese": "提案、提案書",
+    "exampleJa": "提案に目を通す",
+    "exampleEn": "review a proposal"
+  },
+  {
+    "id": 179,
+    "english": "supply",
+    "japanese": "必需品",
+    "exampleJa": "オフィス用品",
+    "exampleEn": "office supply •IIS"
+  },
+  {
+    "id": 180,
+    "english": "enclose",
+    "japanese": "同封する、囲む",
+    "exampleJa": "履歴書を同封いたします。",
+    "exampleEn": "My resume is enclose"
+  },
+  {
+    "id": 181,
+    "english": "policy",
+    "japanese": "規定、方針",
+    "exampleJa": "返品規定",
+    "exampleEn": "returns policy"
+  },
+  {
+    "id": 182,
+    "english": "register",
+    "japanese": "登録する名 レジ",
+    "exampleJa": "社員研修に登録する",
+    "exampleEn": ""
+  },
+  {
+    "id": 183,
+    "english": "arrange",
+    "japanese": "手配する、並べる",
+    "exampleJa": "会議の手配をする",
+    "exampleEn": "arrange"
+  },
+  {
+    "id": 184,
+    "english": "bill",
+    "japanese": "請求書を送る",
+    "exampleJa": "請求書を受け取る",
+    "exampleEn": "recelve a bill"
+  },
+  {
+    "id": 185,
+    "english": "hire",
+    "japanese": "雇う",
+    "exampleJa": "アシスタントを雇う",
+    "exampleEn": "hire"
+  },
+  {
+    "id": 186,
+    "english": "approve",
+    "japanese": "承認する、賛成する",
+    "exampleJa": "計画を承認する",
+    "exampleEn": ""
+  },
+  {
+    "id": 187,
+    "english": "conduct",
+    "japanese": "実行する、実施する",
+    "exampleJa": "アンケート調査を行う",
+    "exampleEn": ""
+  },
+  {
+    "id": 188,
+    "english": "opportunity",
+    "japanese": "機会、チャンス",
+    "exampleJa": "あなたとお仕事をする機会",
+    "exampleEn": "an"
+  },
+  {
+    "id": 189,
+    "english": "deadline",
+    "japanese": "締め切り、期限",
+    "exampleJa": "プロジェクトの締め切り",
+    "exampleEn": "the d-r"
+  },
+  {
+    "id": 190,
+    "english": "corporate",
+    "japanese": "企業の、法人の",
+    "exampleJa": "企業のトレーナー",
+    "exampleEn": "a"
+  },
+  {
+    "id": 191,
+    "english": "warranty",
+    "japanese": "保証、保証書",
+    "exampleJa": "3年保証",
+    "exampleEn": "a three-year warranty"
+  },
+  {
+    "id": 192,
+    "english": "necessar",
+    "japanese": "必要な",
+    "exampleJa": "必要な用紙",
+    "exampleEn": "n-m - forms"
+  },
+  {
+    "id": 193,
+    "english": "reserve",
+    "japanese": "蓄え",
+    "exampleJa": "ホテルの部屋を予約する",
+    "exampleEn": "a room at a hotel"
+  },
+  {
+    "id": 194,
+    "english": "resident",
+    "japanese": "住民、住人",
+    "exampleJa": "地元の住民",
+    "exampleEn": "local resident -S"
+  },
+  {
+    "id": 195,
+    "english": "create",
+    "japanese": "creatively （創造的に）",
+    "exampleJa": "新しいロゴを作り出す",
+    "exampleEn": "a new logo"
+  },
+  {
+    "id": 196,
+    "english": "inform",
+    "japanese": "知らせる、影響を与える",
+    "exampleJa": "〜を知らせることができて嬉しい",
+    "exampleEn": "09Y a- We are happy to inform customers to pay online"
+  },
+  {
+    "id": 197,
+    "english": "allow",
+    "japanese": "許す、可能にする",
+    "exampleJa": "",
+    "exampleEn": ""
+  },
+  {
+    "id": 198,
+    "english": "mention",
+    "japanese": "※リスニングの設問文に頻出。",
+    "exampleJa": "男性はどんな問題について述べていますか。",
+    "exampleEn": "What problem does the man mention"
+  },
+  {
+    "id": 199,
+    "english": "appreciate",
+    "japanese": "感謝する",
+    "exampleJa": "助けて頂いて本当に感謝しています。",
+    "exampleEn": "I really appreciate --- your help."
+  },
+  {
+    "id": 200,
+    "english": "replacement",
+    "japanese": "交換、交換品、後任",
+    "exampleJa": "交換部品",
+    "exampleEn": "parts"
+  }
+]

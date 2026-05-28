@@ -1,4 +1,5 @@
 import re
+from collections import Counter
 
 from .constants import ENTRIES_PER_PAGE, ENTRY_RE
 from .utils import is_english
@@ -48,8 +49,15 @@ def parse_left(lines, row_bands=None):
     if not markers:
         return [None] * ENTRIES_PER_PAGE
 
-    min_id       = min(mk['id'] for mk in markers)
-    base_id      = ((min_id - 1) // ENTRIES_PER_PAGE) * ENTRIES_PER_PAGE + 1
+    # 各マーカーIDが示すbase_idを多数決で決定し、外れ値マーカーを除去する。
+    # 例: スプレッドの本来IDが021-030の場合、"021"の誤読"02"(id=2, base=1)より
+    #     "022"-"030"(base=21)が9票多いためbase_id=21と正しく判定できる。
+    implied = [((mk['id'] - 1) // ENTRIES_PER_PAGE) * ENTRIES_PER_PAGE + 1
+               for mk in markers]
+    base_id = Counter(implied).most_common(1)[0][0]
+    # ベースIDの範囲外のマーカー（ページ番号・誤読など）を除去
+    markers = [mk for mk in markers if base_id <= mk['id'] < base_id + ENTRIES_PER_PAGE]
+
     marker_by_id = {mk['id']: mk for mk in markers}
 
     slot_entries = []
