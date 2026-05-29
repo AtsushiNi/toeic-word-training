@@ -27,6 +27,12 @@ python scripts/ocr_process.py --dir ./data/ --out ./data/my_words.json
 
 # Skip preprocessing (page detection / deskew / brightness normalization)
 python scripts/ocr_process.py --dir ./data/ --no-preprocess
+
+# Run preprocessing only and save images to data/preprocessed/
+python scripts/ocr_process.py --dir ./data/ --stage preprocess
+
+# Full run + save preprocessed images to data/preprocessed/
+python scripts/ocr_process.py --dir ./data/ --save-preprocessed
 ```
 
 ## Dependencies
