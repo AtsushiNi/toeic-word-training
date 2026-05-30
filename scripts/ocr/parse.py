@@ -23,6 +23,14 @@ def detect_annotation_col_x(lines):
     return marker_xs[idx]
 
 
+def is_inline_annotation(text):
+    """
+    右ページ左カラム内の補足注釈行かどうかを判定する。
+    ※ 始まりの行は japanese の意味ではなく補足説明なので除外する。
+    """
+    return text.strip().startswith('※')
+
+
 def is_headword(line):
     """
     見出し語かどうかを判定する。
@@ -158,8 +166,8 @@ def parse_right(lines, row_bands=None):
             hw      = _find_headword(band)
             english = hw['text'].strip() if hw else ''
 
-            # 品詞マーカー付きの日本語意味を優先して探す
-            ja_band  = [l for l in band if not is_english(l['text'])]
+            # 品詞マーカー付きの日本語意味を優先して探す（※注釈行は除外）
+            ja_band  = [l for l in band if not is_english(l['text']) and not is_inline_annotation(l['text'])]
             japanese = ''
             for l in ja_band:
                 t = l['text'].strip()
@@ -215,8 +223,11 @@ def parse_right(lines, row_bands=None):
                 y_end = next_hw['y'] - 5
                 break
 
+        # ※注釈行を除いた日本語バンドで意味を検索する
         band = [l for l in lines
-                if y_start <= l['y'] <= y_end and not is_english(l['text'])]
+                if y_start <= l['y'] <= y_end
+                and not is_english(l['text'])
+                and not is_inline_annotation(l['text'])]
         band.sort(key=lambda l: l['y'])
 
         japanese = ''
