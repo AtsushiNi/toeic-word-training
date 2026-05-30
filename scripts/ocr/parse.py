@@ -5,6 +5,32 @@ from .constants import ENTRIES_PER_PAGE, ENTRY_RE
 from .utils import is_english
 
 
+def detect_annotation_col_x(lines):
+    """
+    右ページの注釈カラム開始x座標を動的に推定する。
+
+    ● / ■ マーカーで始まる行はほぼ必ず注釈カラムの先頭に現れる。
+    これらの最小x座標を注釈カラム境界とする。
+    マーカー行が見つからない場合は None を返し、フィルタリングを行わない。
+    """
+    MARKERS = ('●', '■', '◆', '▶')
+    marker_xs = [l['x'] for l in lines if l['text'].strip().startswith(MARKERS)]
+    if not marker_xs:
+        return None
+    # 最小x座標をそのまま使うとノイズに弱いため、下位20%ile を採用する
+    marker_xs.sort()
+    idx = max(0, int(len(marker_xs) * 0.20) - 1)
+    return marker_xs[idx]
+
+
+def is_inline_annotation(text):
+    """
+    右ページ左カラム内の補足注釈行かどうかを判定する。
+    ※ 始まりの行は japanese の意味ではなく補足説明なので除外する。
+    """
+    return text.strip().startswith('※')
+
+
 def is_headword(line):
     """
     見出し語かどうかを判定する。
@@ -110,9 +136,16 @@ def parse_right(lines, row_bands=None):
     右ページから {english, japanese} を ENTRIES_PER_PAGE 件固定で返す。
     row_bands が指定された場合、各バンド内で見出し語と日本語意味を直接検索する。
     row_bands なしの場合はy座標のギャップ分析で欠損スロットを検出する。
+
+    注釈カラム（● ■ 印の詳細解説）が存在する場合は動的に境界を検出して除外する。
     """
     if not lines:
         return [None] * ENTRIES_PER_PAGE
+
+    # 注釈カラム境界を動的に検出し、境界より右のブロックを除外する
+    annot_x = detect_annotation_col_x(lines)
+    if annot_x is not None:
+        lines = [l for l in lines if l['x'] < annot_x]
 
     if row_bands is not None:
         # 枠線検出バンドを使用して各スロットを処理
@@ -133,8 +166,8 @@ def parse_right(lines, row_bands=None):
             hw      = _find_headword(band)
             english = hw['text'].strip() if hw else ''
 
-            # 品詞マーカー付きの日本語意味を優先して探す
-            ja_band  = [l for l in band if not is_english(l['text'])]
+            # 品詞マーカー付きの日本語意味を優先して探す（※注釈行は除外）
+            ja_band  = [l for l in band if not is_english(l['text']) and not is_inline_annotation(l['text'])]
             japanese = ''
             for l in ja_band:
                 t = l['text'].strip()
@@ -190,8 +223,11 @@ def parse_right(lines, row_bands=None):
                 y_end = next_hw['y'] - 5
                 break
 
+        # ※注釈行を除いた日本語バンドで意味を検索する
         band = [l for l in lines
-                if y_start <= l['y'] <= y_end and not is_english(l['text'])]
+                if y_start <= l['y'] <= y_end
+                and not is_english(l['text'])
+                and not is_inline_annotation(l['text'])]
         band.sort(key=lambda l: l['y'])
 
         japanese = ''
