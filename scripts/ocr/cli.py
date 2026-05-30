@@ -56,30 +56,51 @@ def find_spreads(directory):
     return pairs
 
 
-def process_spread(left_path, right_path, use_preprocess=True):
-    """1ページスプレッド（左右ペア）を前処理・OCR・パースしてエントリーリストを返す。"""
-    print(f"処理中: {left_path.name} + {right_path.name}")
-
+def preprocess_spread(left_path, right_path, save_dir=None):
+    """
+    左右ページ画像に前処理（ページ検出・傾き補正・明るさ正規化）を適用して返す。
+    save_dir が指定された場合は前処理後の画像を PNG で保存する。
+    保存先: <save_dir>/左ページ/<元ファイル名>.png, <save_dir>/右ページ/<元ファイル名>.png
+    """
     left_img  = Image.open(left_path)
     right_img = Image.open(right_path)
 
+    # ページ領域を検出して透視変換で正規化する
+    left_img,  left_page_found  = detect_page_region(left_img)
+    right_img, right_page_found = detect_page_region(right_img)
+
+    # ページ検出できなかった場合はデスキューにフォールバック
+    if not left_page_found:
+        left_img  = deskew(left_img)
+    if not right_page_found:
+        right_img = deskew(right_img)
+
+    left_img  = normalize_brightness(left_img)
+    right_img = normalize_brightness(right_img)
+
+    if save_dir is not None:
+        left_out  = Path(save_dir) / '左ページ' / (left_path.stem  + '.png')
+        right_out = Path(save_dir) / '右ページ' / (right_path.stem + '.png')
+        left_out.parent.mkdir(parents=True, exist_ok=True)
+        right_out.parent.mkdir(parents=True, exist_ok=True)
+        left_img.save(left_out,   format='PNG')
+        right_img.save(right_out, format='PNG')
+        print(f"  前処理後画像を保存: {left_out}, {right_out}")
+
+    return left_img, right_img
+
+
+def process_spread(left_path, right_path, use_preprocess=True, preprocess_save_dir=None):
+    """1ページスプレッド（左右ペア）を前処理・OCR・パースしてエントリーリストを返す。"""
+    print(f"処理中: {left_path.name} + {right_path.name}")
+
     if use_preprocess:
         print("  前処理中 (ページ検出・傾き補正・明るさ正規化)...")
-
-        # ページ領域を検出して透視変換で正規化する
-        left_img,  left_page_found  = detect_page_region(left_img)
-        right_img, right_page_found = detect_page_region(right_img)
-
-        # ページ検出できなかった場合はデスキューにフォールバック
-        if not left_page_found:
-            left_img  = deskew(left_img)
-        if not right_page_found:
-            right_img = deskew(right_img)
-
-        left_img  = normalize_brightness(left_img)
-        right_img = normalize_brightness(right_img)
+        left_img, right_img = preprocess_spread(left_path, right_path, save_dir=preprocess_save_dir)
     else:
         print("  前処理スキップ...")
+        left_img  = Image.open(left_path)
+        right_img = Image.open(right_path)
 
     # 前処理後の画像で行バンドを検出する
     left_bands,  left_reliable  = detect_row_bands(left_img)
@@ -119,6 +140,10 @@ def main():
     parser.add_argument('--out', default='data/words.json')
     parser.add_argument('--no-preprocess', action='store_true',
                         help='ページ検出・傾き補正・明るさ正規化をスキップして生画像のままOCRを実行する')
+    parser.add_argument('--save-preprocessed', action='store_true',
+                        help='前処理後の画像を <dir>/preprocessed/ に PNG で保存する')
+    parser.add_argument('--stage', choices=['preprocess'],
+                        help='実行するステージを指定する。preprocess: 前処理のみ実行して画像を保存')
     args = parser.parse_args()
 
     spreads = find_spreads(args.dir)
@@ -130,12 +155,28 @@ def main():
         )
         sys.exit(1)
 
+    # --stage preprocess: 前処理のみ実行して終了
+    if args.stage == 'preprocess':
+        preprocess_out = Path(args.dir) / 'preprocessed'
+        print(f"前処理ステージ: {len(spreads)} ペアを処理して {preprocess_out} に保存します")
+        for left_path, right_path in spreads:
+            print(f"処理中: {left_path.name} + {right_path.name}")
+            preprocess_spread(left_path, right_path, save_dir=preprocess_out)
+        print(f"\n完了: {len(spreads)} ペアの前処理後画像を {preprocess_out} に保存しました")
+        return
+
+    # --save-preprocessed: 前処理後画像の保存先を設定する
+    preprocess_save_dir = Path(args.dir) / 'preprocessed' if args.save_preprocessed else None
+
     all_entries = []
     all_raw     = []
 
     for left_path, right_path in spreads:
-        entries, raw = process_spread(left_path, right_path,
-                                      use_preprocess=not args.no_preprocess)
+        entries, raw = process_spread(
+            left_path, right_path,
+            use_preprocess=not args.no_preprocess,
+            preprocess_save_dir=preprocess_save_dir,
+        )
         all_entries.extend(entries)
         if args.raw:
             all_raw.append(dict(left_path=str(left_path), right_path=str(right_path), **raw))
@@ -155,6 +196,9 @@ def main():
         with open(raw_path, 'w', encoding='utf-8') as f:
             json.dump(all_raw, f, ensure_ascii=False, indent=2)
         print(f"生データ: {raw_path}")
+
+    if preprocess_save_dir:
+        print(f"前処理後画像: {preprocess_save_dir}")
 
     print("\n--- プレビュー (最初の10件) ---")
     for e in all_entries[:10]:
