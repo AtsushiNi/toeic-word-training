@@ -86,19 +86,29 @@ def parse_left(lines, row_bands=None):
                 if y_start <= l['y'] < y_end
                 and not ENTRY_RE.match(l['text'])]
 
-        ex_ja    = ''
+        ex_ja_candidates = []
         en_frags = []
         for l in sorted(band, key=lambda l: l['y']):
             t = l['text'].strip()
             if not t:
                 continue
-            if not is_english(t) and not ex_ja:
-                ex_ja = t
-            elif is_english(t):
-                en_frags.append((l['x'], t))
+            if not is_english(t):
+                ex_ja_candidates.append(t)
+            else:
+                en_frags.append((l['y'], l['x'], t))
 
-        en_frags.sort(key=lambda p: p[0])
-        ex_en = ' '.join(t for _, t in en_frags).strip()
+        # 文末が句点・感嘆符で終わる行を優先し、なければ最初の非英語行を採用する
+        ex_ja = ''
+        for cand in ex_ja_candidates:
+            if len(cand) >= 6 and cand[-1] in ('。', '！', '!'):
+                ex_ja = cand
+                break
+        if not ex_ja and ex_ja_candidates:
+            ex_ja = ex_ja_candidates[0]
+
+        # y優先→x順でソートして複数行英文の行順を保証する
+        en_frags.sort(key=lambda p: (p[0], p[1]))
+        ex_en = ' '.join(t for _, _, t in en_frags).strip()
 
         slot_entries.append(dict(id=entry_id, exampleJa=ex_ja, exampleEnRaw=ex_en))
 
@@ -215,14 +225,20 @@ def parse_right(lines, row_bands=None):
 def fill_blank(raw, word):
     """
     例文中の空欄プレースホルダーを実際の単語で置換する。
-    OCRのばらつき（'a-------'/'a-'/'a.'/'a'）に対応する。
+    OCRのばらつき（'a-------'/'a-'/'a.'/'a_____'/'a—'）に対応する。
+    先頭文字 + 2文字以上の記号列で厳密マッチを試み、失敗した場合は
+    1文字以上の記号列でフォールバックする。
     """
     if not raw or not word:
         return raw or ''
-    # 先頭文字 + 任意のダッシュ/ドットのパターンを単語境界で置換
-    pat    = re.compile(r'\b' + re.escape(word[0]) + r'[-\.]*(?=\s|$)', re.IGNORECASE)
-    result = pat.sub(word, raw, count=1)
-    return result
+    first = re.escape(word[0])
+    # 厳密パターン: ダッシュ・アンダースコア・ドット・em-dashが2文字以上続く
+    pat_strict = re.compile(r'\b' + first + r'[-_\.—]{2,}', re.IGNORECASE)
+    if pat_strict.search(raw):
+        return pat_strict.sub(word, raw, count=1)
+    # フォールバック: 1文字以上の記号列（単語末尾か文末のみ）
+    pat_loose = re.compile(r'\b' + first + r'[-_\.—]+(?=[\s,\.]|$)', re.IGNORECASE)
+    return pat_loose.sub(word, raw, count=1)
 
 
 def merge(left_entries, right_entries):
